@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form>
+    <h1 style="text-align: center;">Job Application Form</h1>
+    <br>
+    <fieldset name = "Basic Details">
+    <legend>
+      Basic Details
+    </legend>
+    <table cellspacing="10">
+      <tr>
+        <td>
+          <label for = "firstName">firstName</label>
+        </td>
+        <td>
+          <input type = "text" name="firstName" id ="firstName">
+        </td>
+        <td>
+          <label for = "lastName">lastName</label>
+        </td>
+        <td>
+          <input type = "text" name="lastName" id ="lastName">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for = "Designation">Designation</label>
+        </td>
+        <td>
+          <select name="Designation" id ="Designation"></select>
+        </td>
+        <td>
+          <label for = "Address 1">Address 1</label>
+        </td>
+        <td>
+          <input type = "text" name="Address 1" id ="Address 1">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for = "email">email</label>
+        </td>
+        <td>
+          <input type = "text" name="email" id ="email">
+        </td>
+        <td>
+          <label for = "Address 2">Address 2</label>
+        </td>
+        <td>
+          <input type = "text" name="Address 2" id ="Address 2">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for = "Phone Number">Phone Number</label>
+        </td>
+        <td>
+          <input type = "tel" name="Phone Number" id ="Phone Number">
+        </td>
+        <td>
+          <label for = "City">City</label>
+        </td>
+        <td>
+          <input type = "text" name="City" id ="City">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          <label for = "State">State</label>
+        </td>
+        <td>
+          <select name="State" id ="State"></select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for = "Gender">Gender</label>
+        </td>
+        <td>
+          <label for="male">male</label>
+          <input type="radio" name = "gender" id="male" value="male">
+          <label for="female">female</label>
+          <input type="radio" name = "gender" id="female" value="female">
+        </td>
+        <td>
+          <label for = "Zip Code">Zip Code</label>
+        </td>
+        <td>
+          <input type = "text" name="Zip Code" id ="Zip Code">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for = "realtion">Relationship-Status</label>
+          <select name="relation" id="relation">
+            <option value="single">single</option>
+            <option value="married">married</option>
+          </select>
+        </td>
+        <td>
+          <label for = "Date of Birth">Date of Birth</label>
+        </td>
+        <td>
+          <input type="date" id="Date of Birth" name="Date of Birth">
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset name = "Education Details">
+    <legend>
+      Education Details
+    </legend>
+    <table cellspacing = "10">
+      <h5 style="text-align: left;">SSC Result</h5>
+      <tr>
+        <td>
+          <label for = "Name Of Board">Name Of Board</label>
+        </td>
+        <td>
+          <input type = "text" name="Name Of Board" id ="Name Of Board">
+        </td>
+        <td>
+          <label for = "Passing Year">Passing Year</label>
+        </td>
+        <td>
+          <input type="number" min="2000" max="2099" step="1" value="2024" />
+        </td>
+        <td>
+          <label for = "Percentage">Percentage</label>
+        </td>
+        <td>
+          <input type = "number" name="Percentage" id ="Percentage">
+        </td>
+      </tr>
+    </table>
+    <table cellspacing = "10">
+      <h5 style="text-align: left;">HSC Result</h5>
+      <tr>
+        <td>
+          <label for = "Name Of Board">Name Of Board</label>
+        </td>
+        <td>
+          <input type = "text" name="Name Of Board" id ="Name Of Board">
+        </td>
+        <td>
+          <label for = "Passing Year">Passing Year</label>
+        </td>
+        <td>
+          <input type="number" min="2000" max="2099" step="1" value="2024" />
+        </td>
+        <td>
+          <label for = "Percentage">Percentage</label>
+        </td>
+        <td>
+          <input type = "number" name="Percentage" id ="Percentage">
+        </td>
+      </tr>
+    </table>
+    <table cellspacing = "10">
+      <h5 style="text-align: left;">Bachelor Degree</h5>
+      <tr>
+        <td>
+          <label for = "Course Name">Course Name</label>
+        </td>
+        <td>
+          <input type = "text" name="Course Name" id ="Course Name">
+        </td>
+        <td>
+          <label for = "University">University</label>
+        </td>
+        <td>
+          <input type = "text" name="University" id ="University">
+        </td>
+        <td>
+          <label for = "Passing Year">Passing Year</label>
+        </td>
+        <td>
+          <input type="number" min="2000" max="2099" step="1" value="2024" />
+        </td>
+        <td>
+          <label for = "Percentage">Percentage</label>
+        </td>
+        <td>
+          <input type = "number" name="Percentage" id ="Percentage">
+        </td>
+      </tr>
+    </table>
+    <table cellspacing = "10">
+      <h5 style="text-align: left;">Master Degree</h5>
+      <tr>
+        <td>
+          <label for = "Course Name">Course Name</label>
+        </td>
+        <td>
+          <input type = "text" name="Course Name" id ="Course Name">
+        </td>
+        <td>
+          <label for = "University">University</label>
+        </td>
+        <td>
+          <input type = "text" name="University" id ="University">
+        </td>
+        <td>
+          <label for = "Passing Year">Passing Year</label>
+        </td>
+        <td>
+          <input type="number" min="2000" max="2099" step="1" value="2024" />
+        </td>
+        <td>
+          <label for = "Percentage">Percentage</label>
+        </td>
+        <td>
+          <input type = "number" name="Percentage" id ="Percentage">
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset name="Work Experience">
+    <legend>
+      Work Experience
+    </legend>
+    <table cellspacing="10">
+      <tr>
+        <td>
+          <label for = "companyName">companyName</label>
+        </td>
+        <td>
+          <input type = "text" name="companyName" id ="companyName">
+        </td>
+        <td>
+          <label for = "Designation">Designation</label>
+        </td>
+        <td>
+          <input type = "text" name="Designation" id ="Designation">
+        </td>
+        <td>
+          <label for = "From">From</label>
+        </td>
+        <td>
+          <input type = "Number" name="From" id ="From">
+        </td>
+        <td>
+          <label for = "To">To</label>
+        </td>
+        <td>
+          <input type = "Number" name="To" id ="To">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for = "companyName">companyName</label>
+        </td>
+        <td>
+          <input type = "text" name="companyName" id ="companyName">
+        </td>
+        <td>
+          <label for = "Designation">Designation</label>
+        </td>
+        <td>
+          <input type = "text" name="Designation" id ="Designation">
+        </td>
+        <td>
+          <label for = "From">From</label>
+        </td>
+        <td>
+          <input type = "Number" name="From" id ="From">
+        </td>
+        <td>
+          <label for = "To">To</label>
+        </td>
+        <td>
+          <input type = "Number" name="To" id ="To">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for = "companyName">companyName</label>
+        </td>
+        <td>
+          <input type = "text" name="companyName" id ="companyName">
+        </td>
+        <td>
+          <label for = "Designation">Designation</label>
+        </td>
+        <td>
+          <input type = "text" name="Designation" id ="Designation">
+        </td>
+        <td>
+          <label for = "From">From</label>
+        </td>
+        <td>
+          <input type = "Number" name="From" id ="From">
+        </td>
+        <td>
+          <label for = "To">To</label>
+        </td>
+        <td>
+          <input type = "Number" name="To" id ="To">
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset name = "Language Known">
+    <legend>
+      Language Known 
+    </legend>
+    <table cellspacing="10">
+      <tr>
+        <td><input type="checkbox" name="Hindi" id = "Hindi"></td>
+        <td><label for="Hindi">Hindi</label></td>
+        <td><input type="checkbox" name="read" id = "read"></td>
+        <td><label for="read">read</label></td>
+        <td><input type="checkbox" name="Write" id = "write"></td>
+        <td><label for="write">write</label></td>
+        <td><input type="checkbox" name="speak" id = "speak"></td>
+        <td><label for="speak">speak</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="English" id = "English"></td>
+        <td><label for="English">English</label></td>
+        <td><input type="checkbox" name="read" id = "read"></td>
+        <td><label for="read">read</label></td>
+        <td><input type="checkbox" name="Write" id = "write"></td>
+        <td><label for="write">write</label></td>
+        <td><input type="checkbox" name="speak" id = "speak"></td>
+        <td><label for="speak">speak</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="Gujarati" id = "Gujarati"></td>
+        <td><label for="Gujarati">Gujarati</label></td>
+        <td><input type="checkbox" name="read" id = "read"></td>
+        <td><label for="read">read</label></td>
+        <td><input type="checkbox" name="Write" id = "write"></td>
+        <td><label for="write">write</label></td>
+        <td><input type="checkbox" name="speak" id = "speak"></td>
+        <td><label for="speak">speak</label></td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset name = "Technologies You Know">
+    <legend>
+      Technologies You Know
+    </legend>
+    <table cellspacing="10">
+      <tr>
+        <td><input type="checkbox" name="PHP" id = "PHP"></td>
+        <td><label for="PHP">PHP</label></td>
+        <td><input type="checkbox" name="Beginer" id = "Beginer"></td>
+        <td><label for="Beginer">Beginer</label></td>
+        <td><input type="checkbox" name="Mideator" id = "Mideator"></td>
+        <td><label for="Mideator">Mideator</label></td>
+        <td><input type="checkbox" name="Expert" id = "Expert"></td>
+        <td><label for="Expert">Expert</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="MySQL" id = "MySQL"></td>
+        <td><label for="MySQL">MySQL</label></td>
+        <td><input type="checkbox" name="Beginer" id = "Beginer"></td>
+        <td><label for="Beginer">Beginer</label></td>
+        <td><input type="checkbox" name="Mideator" id = "Mideator"></td>
+        <td><label for="Mideator">Mideator</label></td>
+        <td><input type="checkbox" name="Expert" id = "Expert"></td>
+        <td><label for="Expert">Expert</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="laravel" id = "laravel"></td>
+        <td><label for="laravel">laravel</label></td>
+        <td><input type="checkbox" name="Beginer" id = "Beginer"></td>
+        <td><label for="Beginer">Beginer</label></td>
+        <td><input type="checkbox" name="Mideator" id = "Mideator"></td>
+        <td><label for="Mideator">Mideator</label></td>
+        <td><input type="checkbox" name="Expert" id = "Expert"></td>
+        <td><label for="Expert">Expert</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="Oracle" id = "Oracle"></td>
+        <td><label for="Oracle">Oracle</label></td>
+        <td><input type="checkbox" name="Beginer" id = "Beginer"></td>
+        <td><label for="Beginer">Beginer</label></td>
+        <td><input type="checkbox" name="Mideator" id = "Mideator"></td>
+        <td><label for="Mideator">Mideator</label></td>
+        <td><input type="checkbox" name="Expert" id = "Expert"></td>
+        <td><label for="Expert">Expert</label></td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset name = "Referance Contact">
+    <legend>
+      Referance Contact
+    </legend>
+    <table cellspacing="10">
+      <tr>
+        <td>
+          <label for = "Name">Name</label>
+        </td>
+        <td>
+          <input type = "text" name="Name" id ="Name">
+        </td>
+        <td>
+          <label for = "ContactNumber">ContactNumber</label>
+        </td>
+        <td>
+          <input type = "tel" name="ContactNumber" id ="ContactNumber">
+        </td>
+        <td>
+          <label for = "Relation">Relation</label>
+        </td>
+        <td>
+          <input type = "text" name="Relation" id ="Relation">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for = "Name">Name</label>
+        </td>
+        <td>
+          <input type = "text" name="Name" id ="Name">
+        </td>
+        <td>
+          <label for = "ContactNumber">ContactNumber</label>
+        </td>
+        <td>
+          <input type = "tel" name="ContactNumber" id ="ContactNumber">
+        </td>
+        <td>
+          <label for = "Relation">Relation</label>
+        </td>
+        <td>
+          <input type = "text" name="Relation" id ="Relation">
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset>
+    <legend>
+      Referance Contact
+    </legend>
+    <table>
+      <tr>
+        <td>
+          <label for = "Preferd location">Preferd location</label>
+        </td>
+        <td>
+          <select name="Preferd location" id ="Preferd location">
+            <option value="Ahmedabad">Ahmedabad</option>
+            <option value="Rajkot">Rajkot</option>
+            <option value="Gandhinagar">Gandhinagar</option>
+          </select>
+        </td>
+        <td>
+          <label for = "Notice period">Notice period</label>
+        </td>
+        <td>
+          <input type = "number" name="Notice period" id ="Notice period">
+        </td>
+        <td>
+          <label for = "Department">Department</label>
+        </td>
+        <td>
+          <select name="Department" id ="Department">
+            <option value="Development">Development</option>
+            <option value="Design">Design</option>
+            <option value="marketing">marketing</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          <label for = "Expacted CTC">Expacted CTC</label>
+        </td>
+        <td>
+          <input type = "text" name="Expacted CTC" id ="Expacted CTC">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          <label for = "Current CTC">Current CTC</label>
+        </td>
+        <td>
+          <input type = "text" name="Current CTC" id ="Current CTC">
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  </form>
+</body>
+</html>

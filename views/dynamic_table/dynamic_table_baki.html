@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tirth Raval 24DEV077</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h1{
+            color:#333;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button{
+            border:1px solid #333;
+            font-size: 24px;
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            margin: 0 5px;
+            cursor:pointer;
+            background-color: #ffd700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover{
+            background-color: #ffcc00;
+        }
+        table{
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        td{
+            width:80px;
+            height:80px;
+            background-color: #fff;
+            border:1px solid #ddd;
+        }
+        tr:nth-child(odd) 
+        td:nth-child(even),
+        tr:nth-child(even) 
+        td:nth-child(odd){
+            background-color:#f2f2f2;
+        }
+        .controls .buttons{
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color:rgb(0, 0, 0);text-align:center;">Tirth Raval 24DEV077</h1>
+    <div style="display:flex; flex-flow: row nowrap; justify-content: flex-end;">
+        <span class="buttons" onclick="increaseCol()">+</span>
+        <span class="buttons" onclick="decreaseCol()">-</span>
+    </div>
+    <table border="1">
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <div style="display:flex; flex-flow: column nowrap; position : static; bottom:0;">
+        <span class="buttons" onclick="increaseRow()">+</span>
+        <span class="buttons" onclick="decreaseRow()">-</span>
+    </div>
+</body>
+<script type="text/javascript">
+    let t=document.getElementsByTagName("table")[0];
+    function increaseCol(){
+        document.querySelectorAll("tr").forEach((tr)=>{
+            let td = document.createElement("td");
+            tr.appendChild(td);
+        });                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    }
+
+    function decreaseCol(){
+        if(document.querySelectorAll("tr")[0].childElementCount>2){
+            document.querySelectorAll("tr").forEach((tr)=>{
+                tr.removeChild(tr.lastChild);
+            })
+        }
+    }
+
+    function increaseRow(){
+        document.querySelector("table").appendChild(document.querySelector("tr").cloneNode(true));
+    }
+
+    function decreaseRow(){
+        if(document.querySelectorAll("td").length>4){
+            document.querySelector("table").removeChild(document.querySelector("table").lastChild)
+        }
+    }
+
+</script>
+</html>

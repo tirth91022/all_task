@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 >Enter Element</h2>
+    <input type = "button" value="bubblesort" id="sort">
+    <input type = "button" value="selection sort" id ="sort1">
+    <input type="text" id ="arr">
+    <input type="button" value="Add Value" id="adding" onclick="addingValue()">
+    <h4 id="sorting"></h4>
+    <script>
+        var array1=[];
+        var array2;
+        function addingValue(){
+            var val=(document.getElementById("arr").value);
+            array2=val.split(",");
+            let n =array2.length;
+            for(let count1=0;count1<n;count1++){
+                array1.push(Number(array2[count1]));
+            }
+        }
+        
+        let sorting1 = document.getElementById('sort');
+        let sorting2 = document.getElementById('sort1');
+        sorting1.addEventListener("click",()=>{
+            bubblesort(array1);
+            array1=[]
+        })
+        sorting2.addEventListener("click",()=>{
+            bubblesort(array1)
+        })
+
+        function bubblesort(array1){
+            let temp;
+            for(let i = 0;i<array1.length;i++){
+                for(let j=0;j<array1.length-1;j++){
+                    if(array1[j]>array1[j+1]){
+                        temp=array1[j];
+                        array1[j]=array1[j+1];
+                        array1[j+1]=temp;
+                    }
+                }
+            }
+            document.getElementById("sorting").innerText=array1.toString();
+            array1=[];
+        }
+        
+    </script>
+</body>
+</html>

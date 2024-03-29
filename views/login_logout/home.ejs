@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: #f9f9f9;
+        /* Light gray background */
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        /* Dark gray text color */
+    }
+
+    a {
+        color: #333;
+        /* Dark gray link color */
+        text-decoration: none;
+        background-color: #ccc;
+        /* Light gray link background color */
+        padding: 10px;
+        border-radius: 5px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+        background-color: #999;
+        /* Darker gray background color on hover */
+    }
+
+    p {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+
+<body>
+    <h1 style="text-align: center;">welcome to dashboard <%= userName %>
+    </h1>
+    <p><a href="http://localhost:8000/logout">Logout</a></p>
+</body>
+
+</html>

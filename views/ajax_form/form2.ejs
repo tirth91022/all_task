@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .fieldset {
+      display: none;
+    }
+
+    .fieldset.active {
+      display: block;
+    }
+  </style>
+  <link rel="shortcut icon" href="#">
+</head>
+
+<body>
+  <input type="hidden" name="userId" value="<%= userData && userData[0].bid %>">
+  <fieldset name="Basic Details" id="basicDetails" class="fieldset">
+    <legend>
+      Basic Details
+    </legend>
+    <table cellspacing="10">
+      <tr>
+        <td>
+          <label for="firstName">firstName</label>
+        </td>
+        <td>
+          <input type="text" name="firstName" id="firstName" value="<%= userData ? userData[0][0].first_name:'' %>">
+          <span id="firstNameError" style="color:red;"></span>
+        </td>
+        <td>
+          <label for="lastName">lastName</label>
+        </td>
+        <td>
+          <input type="text" name="lastName" id="lastName" value="<%= userData ? userData[0][0].last_name:'' %>">
+          <span id="lastNameError" style="color:red;"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="Designation">Designation</label>
+        </td>
+        <td>
+          <select name="Designation" id="Designation" value="<%=userData[0] ? userData[0][0].designation:'' %>">
+            <option value="SWE">SWE</option>
+            <option value="Technical Lead">Technical Lead</option>
+            <option value="Project Manager">Project Manager</option>
+            <option value="CTO">CTO</option>
+          </select>
+        </td>
+        <td>
+          <label for="Address_1">Address 1</label>
+        </td>
+        <td>
+          <input type="text" name="Address_1" id="Address_1" value="<%=userData ? userData[0][0].address_1:'' %>">
+          <span id="Address_1Error" style="color:red;"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="email">email</label>
+        </td>
+        <td>
+          <input type="text" name="email" id="email" value="<%= userData ? userData[0][0].email:'' %>">
+          <span id="emailError" style="color:red;"></span>
+        </td>
+        <td>
+          <label for="Address 2">Address 2</label>
+        </td>
+        <td>
+          <input type="text" name="address_2" id="address_2" value="<%= userData ? userData[0][0].address_2:'' %>">
+          <span id="address_2Error" style="color:red;"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="phone_number">Phone Number</label>
+        </td>
+        <td>
+          <input type="text" name="phone_number" id="phone_number"
+            value="<%= userData ? userData[0][0].phone_number:'' %>">
+          <span id="phone_number_error" style="color:red;"></span>
+        </td>
+        <td>
+          <label for="city">City</label>
+        </td>
+        <td>
+          <input type="text" name="city" id="city" value="<%= userData ? userData[0][0].city:'' %>">
+          <span id="cityError" style="color:red;"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+          <label for="State">State</label>
+        </td>
+        <td>
+          <select name="State" id="State" value="<%= userData ? userData[0][0].state:'' %>">
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Andra Pradesh">Andra Pradesh</option>
+            <option value="Bihar">Bihar</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="Gender">Gender</label>
+        </td>
+        <td>
+          <label for="male" id="mata">male</label>
+          <input type="radio" name="gender" id="gender" value="male" <%if(userData && userData[0][0] &&
+            userData[0][0].gender=='male' ) {%> checked <%}%>>
+
+            <label for="female">female</label>
+            <input type="radio" name="gender" id="gender" value="female" <%if(userData && userData[0][0] &&
+              userData[0][0].gender=='female' ) {%> checked <%}%>>
+              <span id="genderError" style="color:red;"></span>
+        </td>
+        <td>
+          <label for="zip_code">Zip Code</label>
+        </td>
+        <td>
+          <input type="text" name="zip_code" id="zip_code" value="<%= userData ? userData[0][0].zip_code:'' %>">
+          <span id="zip_codeError" style="color:red;"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="realtion">Relationship-Status</label>
+          <select name="relation" id="relation" value="<%= userData ? userData[0][0].relationalshipStatus:'' %>">
+            <option value="single">single</option>
+            <option value="married">married</option>
+          </select>
+        </td>
+        <td>
+          <label for="date_of_birth">Date of Birth</label>
+        </td>
+        <td>
+          <input type="text" id="date_of_birth" name="date_of_birth" value="<%= userData ? userData[0][0].DOB:'' %>">
+          <span id="date_of_birthError" style="color:red;"></span>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset name="Education Details" id="educationDetails" class="fieldset">
+    <legend>Education Details
+      <button type="button" onclick="appendRow('educationTable')">&#x1f6bf</button>
+      <button type="button" onclick="deleteRow('educationTable')">&#128688</button>
+    </legend>
+    <table cellspacing="10" id="educationTable">
+      <% if(userData[1]?.length) { for (let i=0; i < userData[1]?.length; i++) { %>
+        <tr>
+          <td>
+            <label for="courseName">Course Name</label>
+          </td>
+          <td>
+            <select name="course[]" id="course" value="<%= userData ? userData[1][i].course:'' %>">
+              <option value="SSC" <%if(userData && userData[1][i].course==='SSC' ){%> selected <%} %>>SSC
+              </option>
+              <option value="HSC" <%if(userData && userData[1][i].course==='HSC' ){%> selected <%} %>>HSC
+              </option>
+              <option value="Bachelor" <%if(userData && userData[1][i].course==='Bachelor' ){%> selected <%} %>
+                  >Bachelors</option>
+              <option value="Masters" <%if(userData && userData[1][i].course==='Masters' ){%> selected <%} %>
+                  >Masters</option>
+            </select>
+          </td>
+          <td>
+            <label for="passing_yyear">Passing Year</label>
+          </td>
+          <td>
+            <input type="text" name="passing_yyear[]" id="passing_yyear"
+              value="<%=userData ? userData[1][i].passing_year:'' %>">
+            <span id="passing_yyearError" style="color:red;"></span>
+          </td>
+
+          <td>
+            <label for="persu1">Percentage</label>
+          </td>
+          <td>
+            <input type="text" name="persu1[]" id="persu1" value="<%= userData ? userData[1][i].percentage:'' %>">
+            <span id="persu1Error" style="color:red;"></span>
+          </td>
+        </tr>
+        <% }} if(!userData[1]?.length){ %>
+          <tr>
+            <td>
+              <label for="courseName">Course Name</label>
+            </td>
+            <td>
+              <select name="course[]" id="course">
+                <option value="SSC">SSC
+                </option>
+                <option value="HSC">HSC
+                </option>
+                <option value="Bachelor">Bachelors</option>
+                <option value="Masters">Masters</option>
+              </select>
+            </td>
+            <td>
+              <label for="passing_yyear">Passing Year</label>
+            </td>
+            <td>
+              <input type="text" name="passing_yyear[]" id="passing_yyear">
+              <span id="passing_yyearError" style="color:red;"></span>
+            </td>
+
+            <td>
+              <label for="persu1">Percentage</label>
+            </td>
+            <td>
+              <input type="text" name="persu1[]" id="persu1">
+              <span id="persu1Error" style="color:red;"></span>
+            </td>
+          </tr>
+          <% } %>
+    </table>
+  </fieldset>
+  <fieldset name="Work Experience" id="workExperience" class="fieldset">
+    <legend>Work Experience
+      <button type="button" onclick="appendRow('workExperienceTable')">&#x1f6bf</button>
+      <button type="button" onclick="deleteRow('workExperienceTable')">&#128688</button>
+    </legend>
+    <table cellspacing="10" id="workExperienceTable">
+      <% if(userData[2]?.length) {for (let i=0; i < userData[2]?.length; i++) { %>
+        <tr>
+          <td>
+            <label for="companyName">companyName</label>
+          </td>
+          <td>
+            <input type="text" name="companyName1[]" id="companyName1"
+              value="<%= userData ? userData[2][i].companyName1:'' %>">
+            <span id="companyNameError1" style="color:red;"></span>
+          </td>
+          <td>
+            <label for="Designation">Designation</label>
+          </td>
+          <td>
+            <input type="text" name="Designation1[]" id="Designation1"
+              value="<%= userData ? userData[2][i].designation1:'' %>">
+            <span id="DesignationError1" style="color:red;"></span>
+          </td>
+          <td>
+            <label for="From">From</label>
+          </td>
+          <td>
+            <input type="text" name="From1[]" id="From1" value="<%= userData ? userData[2][i].from1 :'' %>">
+            <span id="fromError1" style="color:red;"></span>
+          </td>
+          <td>
+            <label for="To">To</label>
+          </td>
+          <td>
+            <input type="text" name="To1[]" id="To1" value="<%= userData ? userData[2][i].to1 :'' %>">
+            <span id="toError1" style="color:red;"></span>
+          </td>
+        </tr>
+        <% }} if(!userData[2]?.length){ %>
+          <tr>
+            <td>
+              <label for="companyName">companyName</label>
+            </td>
+            <td>
+              <input type="text" name="companyName1[]" id="companyName1">
+              <span id="companyNameError1" style="color:red;"></span>
+            </td>
+            <td>
+              <label for="Designation">Designation</label>
+            </td>
+            <td>
+              <input type="text" name="Designation1[]" id="Designation1">
+              <span id="DesignationError1" style="color:red;"></span>
+            </td>
+            <td>
+              <label for="From">From</label>
+            </td>
+            <td>
+              <input type="text" name="From1[]" id="From1">
+              <span id="fromError1" style="color:red;"></span>
+            </td>
+            <td>
+              <label for="To">To</label>
+            </td>
+            <td>
+              <input type="text" name="To1[]" id="To1">
+              <span id="toError1" style="color:red;"></span>
+            </td>
+          </tr>
+          <% } %>
+    </table>
+
+  </fieldset>
+  <fieldset name="Language Known" id="languageKnown" class="fieldset">
+    <legend>
+      Language Known
+    </legend>
+    <table cellspacing="10" id="languageKnown">
+      <tr>
+        <td><input type="checkbox" name="language[]" id="Hindi" value="hindi" onclick="validateCheckbox('Hindi')">
+        </td>
+        <td><label for="Hindi">Hindi</label></td>
+        <td><input type="checkbox" name="hindi[]" id="read" class="Hindi-checkbox" value="read" disabled></td>
+        <td><label for="read">read</label></td>
+        <td><input type="checkbox" name="hindi[]" id="write" class="Hindi-checkbox" value="write" disabled></td>
+        <td><label for="write">write</label></td>
+        <td><input type="checkbox" name="hindi[]" id="speak" class="Hindi-checkbox" value="speak" disabled></td>
+        <td><label for="speak">speak</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="language[]" id="English" value="english" onclick="validateCheckbox('English')">
+        </td>
+        <td><label for="English">English</label></td>
+        <td><input type="checkbox" name="english[]" id="read" class="English-checkbox" value="read" disabled></td>
+        <td><label for="read">read</label></td>
+        <td><input type="checkbox" name="english[]" id="write" class="English-checkbox" value="write" disabled></td>
+        <td><label for="write">write</label></td>
+        <td><input type="checkbox" name="english[]" id="speak" class="English-checkbox" value="speak" disabled></td>
+        <td><label for="speak">speak</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="language[]" id="Gujarati" value="gujarati"
+            onclick="validateCheckbox('Gujarati')"></td>
+        <td><label for="Gujarati">Gujarati</label></td>
+        <td><input type="checkbox" name="gujarati[]" id="read" class="Gujarati-checkbox" value="read" disabled></td>
+        <td><label for="read">read</label></td>
+        <td><input type="checkbox" name="gujarati[]" id="write" class="Gujarati-checkbox" value="write" disabled></td>
+        <td><label for="write">write</label></td>
+        <td><input type="checkbox" name="gujarati[]" id="speak" class="Gujarati-checkbox" value="speak" disabled></td>
+        <td><label for="speak">speak</label></td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset name="Technologies You Know" id="technologiesYouKnow" class="fieldset">
+    <legend>
+      Technologies You Know
+    </legend>
+    <table cellspacing="10" id="technologyKnown">
+
+      <tr>
+        <td><input type="checkbox" name="technology[]" id="PHP" value="php" onclick="validateCheckbox1('PHP')"></td>
+        <td><label for="PHP">PHP</label></td>
+        <td><input type="radio" name="php[]" id="Beginer" class="PHP-checkbox" value="Beginer" disabled></td>
+        <td><label for="Beginer">Beginer</label></td>
+        <td><input type="radio" name="php[]" id="Mideator" class="PHP-checkbox" value="Mideator" disabled></td>
+        <td><label for="Mideator">Mideator</label></td>
+        <td><input type="radio" name="php[]" id="Expert" class="PHP-checkbox" value="Expert" disabled></td>
+        <td><label for="Expert">Expert</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="technology[]" id="MySQL" value="mysql" onclick="validateCheckbox1('MySQL')">
+        </td>
+        <td><label for="MySQL">MySQL</label></td>
+        <td><input type="radio" name="mysql[]" id="Beginer" class="MySQL-checkbox" value="Beginer" disabled></td>
+        <td><label for="Beginer">Beginer</label></td>
+        <td><input type="radio" name="mysql[]" id="Mideator" class="MySQL-checkbox" value="Mideator" disabled></td>
+        <td><label for="Mideator">Mideator</label></td>
+        <td><input type="radio" name="mysql[]" id="Expert" class="MySQL-checkbox" value="Expert" disabled></td>
+        <td><label for="Expert">Expert</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="technology[]" id="laravel" value="laravel"
+            onclick="validateCheckbox1('laravel')"></td>
+        <td><label for="laravel">laravel</label></td>
+        <td><input type="radio" name="laravel[]" id="Beginer" class="laravel-checkbox" value="Beginer" disabled>
+        </td>
+        <td><label for="Beginer">Beginer</label></td>
+        <td><input type="radio" name="laravel[]" id="Mideator" class="laravel-checkbox" value="Mideator" disabled>
+        </td>
+        <td><label for="Mideator">Mideator</label></td>
+        <td><input type="radio" name="laravel[]" id="Expert" class="laravel-checkbox" value="Expert" disabled></td>
+        <td><label for="Expert">Expert</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="technology[]" id="Oracle" value="oracle" onclick="validateCheckbox1('Oracle')">
+        </td>
+        <td><label for="Oracle">Oracle</label></td>
+        <td><input type="radio" name="oracle[]" id="Beginer" class="Oracle-checkbox" value="Beginer" disabled></td>
+        <td><label for="Beginer">Beginer</label></td>
+        <td><input type="radio" name="oracle[]" id="Mideator" class="Oracle-checkbox" value="Mideator" disabled>
+        </td>
+        <td><label for="Mideator">Mideator</label></td>
+        <td><input type="radio" name="oracle[]" id="Expert" class="Oracle-checkbox" value="Expert" disabled></td>
+        <td><label for="Expert">Expert</label></td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset name="Reference Contact" id="referenceContact" class="fieldset">
+    <legend>Reference Contact
+      <button type="button" onclick="appendRow('referenceTable')">&#x1f6bf</button>
+      <button type="button" onclick="deleteRow('referenceTable')">&#128688</button>
+    </legend>
+    <table cellspacing="10" id="referenceTable">
+      <% if(userData[3]?.length) { for (let i=0; i < userData[3]?.length; i++) { %>
+        <tr>
+          <td>
+            <label for="Name">Name</label>
+          </td>
+          <td>
+            <input type="text" name="Name1[]" id="Name1" value="<%= userData ? userData[3][i].name1:'' %>">
+            <span id="NameError1" style="color:red;"></span>
+          </td>
+          <td>
+            <label for="ContactNumber">ContactNumber</label>
+          </td>
+          <td>
+            <input type="text" name="ContactNumber1[]" id="ContactNumber1"
+              value="<%= userData ? userData[3][i].contactNo1:'' %>">
+            <span id="ContactNumberError1" style="color:red;"></span>
+          </td>
+          <td>
+            <label for="Relation">Relation</label>
+          </td>
+          <td>
+            <input type="text" name="Relation1[]" id="Relation1" value="<%= userData ? userData[3][i].relation1:'' %>">
+            <span id="RelationError1" style="color:red;"></span>
+          </td>
+        </tr>
+        <% }} if(!userData[3]?.length){ %>
+          <tr>
+            <td>
+              <label for="Name">Name</label>
+            </td>
+            <td>
+              <input type="text" name="Name1[]" id="Name1" value="<%= userData ? userData[3][i].name1:'' %>">
+              <span id="NameError1" style="color:red;"></span>
+            </td>
+            <td>
+              <label for="ContactNumber">ContactNumber</label>
+            </td>
+            <td>
+              <input type="text" name="ContactNumber1[]" id="ContactNumber1"
+                value="<%= userData ? userData[3][i].contactNo1:'' %>">
+              <span id="ContactNumberError1" style="color:red;"></span>
+            </td>
+            <td>
+              <label for="Relation">Relation</label>
+            </td>
+            <td>
+              <input type="text" name="Relation1[]" id="Relation1"
+                value="<%= userData ? userData[3][i].relation1:'' %>">
+              <span id="RelationError1" style="color:red;"></span>
+            </td>
+          </tr>
+          <% } %>
+    </table>
+
+  </fieldset>
+  <fieldset id="referInfo" class="fieldset">
+    <legend>
+      Referance Contact Information
+    </legend>
+    <table>
+      <tr>
+        <td>
+          <label for="Preferd location">Preferd location</label>
+        </td>
+        <td>
+          <select name="Preferd_location" id="Preferd_location"
+            value="<%=  userData && userData[4][0].prefered_location ? userData[4][0].prefered_location :'' %>">
+            <option value="Ahmedabad">Ahmedabad</option>
+            <option value="Rajkot">Rajkot</option>
+            <option value="Gandhinagar">Gandhinagar</option>
+          </select>
+        </td>
+        <td>
+          <label for="Notice period">Notice period</label>
+        </td>
+        <td>
+          <input type="text" name="Notice_period" id="Notice_period"
+            value="<%= userData && userData[4][0].notice_period ? userData[4][0].notice_period :'' %>">
+          <span id="Notice_periodError" style="color:red;"></span>
+        </td>
+        <td>
+          <label for="Department">Department</label>
+        </td>
+        <td>
+          <select name="Department" id="Department"
+            value="<%= userData && userData[4][0].department ? userData[4][0].department : '' %>">
+            <option value="Development">Development</option>
+            <option value="Design">Design</option>
+            <option value="marketing">marketing</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+          <label for="Expacted_CTC">Expacted CTC</label>
+        </td>
+        <td>
+          <input type="text" name="Expacted_CTC" id="Expacted_CTC"
+            value="<%= userData && userData[4][0].expected_ctc ? userData[4][0].expected_ctc :'' %>">
+          <span id="Expacted_CTCError" style="color:red;"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+          <label for="Current_CTC">Current CTC</label>
+        </td>
+        <td>
+          <input type="text" name="Current_CTC" id="Current_CTC"
+            value="<%=userData && userData[4][0].current_ctc ? userData[4][0].current_ctc : '' %>">
+          <span id="Current_CTCError" style="color:red;"></span>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset id="save" class="fieldset">
+    <button type="button" value="save" id="saveBtn">&#9749;</button>
+  </fieldset>
+  <button type="button" id="prebBtn" onclick="prevSection()">Previous</button>
+  <button type="button" id="nextBtn" onclick="nextSection()">Next</button>
+  <script>
+
+    const fieldsets = document.querySelectorAll('.fieldset');
+    let currentSection = 0;
+    fieldsets[0].classList.add('active');
+
+    function showSection(index) {
+      fieldsets.forEach((fieldset, i) => {
+        if (i === index) {
+          fieldset.classList.add('active');
+        } else {
+          fieldset.classList.remove('active');
+        }
+      });
+    }
+    function nextSection() {
+
+      if (currentSection < fieldsets.length - 1) {
+
+        if (validateForm(fieldsets[currentSection])) {
+          currentSection++;
+          showSection(currentSection);
+        }
+      }
+    }
+    function prevSection() {
+      if (currentSection > 0) {
+        currentSection--;
+        showSection(currentSection);
+      }
+    }
+
+    function appendRow(tableId) {
+      var table = document.getElementById(tableId);
+      console.log(table);
+      var newRow = table.rows[0].cloneNode(true); // Clone the first row
+      var rowCount = table.rows.length;
+      var lastRow = table.rows[rowCount - 1];
+      console.log("hello");
+      // Set new IDs for the inputs in the cloned row
+      for (var i = 0; i < newRow.cells.length; i++) {
+        var inputs = newRow.cells[i].getElementsByTagName('input');
+        for (var j = 0; j < inputs.length; j++) {
+          var oldId = inputs[j].id;
+          var newId = oldId.slice(0, -1) + rowCount; // Update the ID
+          inputs[j].id = newId;
+          //inputs[j].name = newId; // Also update the name attribute for form submission
+          inputs[j].value = ''; // Clear the input value
+          var errorSpan = document.getElementById(oldId + "Error1");
+          if (errorSpan) {
+            errorSpan.id = newId + "Error" + rowCount;
+          }
+        }
+      }
+
+      // Append the new row to the table
+      table.appendChild(newRow);
+    }
+
+    function deleteRow(tableId) {
+      var table = document.getElementById(tableId);
+      var rowCount = table.rows.length;
+
+      // Do not delete the first row
+      if (rowCount > 1) {
+        table.deleteRow(rowCount - 1);
+      } else {
+        alert("Cannot delete the last row!");
+      }
+    }
+
+    function validateCheckbox(language) {
+      var languageCheckbox = document.getElementById(language);
+      var checkboxes = document.querySelectorAll('.' + language + '-checkbox');
+      if (languageCheckbox.checked) {
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].disabled = false;
+        }
+      } else {
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = false;
+          checkboxes[i].disabled = true;
+        }
+      }
+    }
+
+    function validateCheckbox1(language) {
+      var languageCheckbox = document.getElementById(language);
+      var checkboxes = document.querySelectorAll('.' + language + '-checkbox');
+      if (languageCheckbox.checked) {
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].disabled = false;
+        }
+      } else {
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = false;
+          checkboxes[i].disabled = true;
+        }
+      }
+    }
+    function validateForm() {
+      //basic details
+      //console.log("how are you");
+      if (currentSection === 0) {
+
+
+        let isValid = true;
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
+        var Address_1 = document.getElementById('Address_1').value;
+        var email = document.getElementById('email').value;
+        var address_2 = document.getElementById('address_2').value;
+        var phone_number = document.getElementById('phone_number').value;
+        var city = document.getElementById('city').value;
+        var zip_code = document.getElementById('zip_code').value;
+        var date_of_birth = document.getElementById('date_of_birth').value;
+
+        var firstNameRegex = /^[a-zA-Z]+$/;
+        var lastNameRegex = /^[a-zA-Z]+$/;
+        var emailRegex = /^[^\s@]+@[^/s@]+\.[^\s@]+$/;
+        var phone_numberRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+        var cityRegex = /^[a-zA-Z]+$/;
+        var date_of_birthRegex = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
+
+        var firstNameError = document.getElementById("firstNameError");
+        var lastNameError = document.getElementById("lastNameError");
+        var Address_1Error = document.getElementById("Address_1Error");
+        var emailError = document.getElementById("emailError");
+        var address_2Error = document.getElementById("address_2Error");
+        var phone_number_error = document.getElementById("phone_number_error");
+        var cityError = document.getElementById("cityError");
+        var genderError = document.getElementById("genderError");
+        var zip_codeError = document.getElementById("zip_codeError");
+        var date_of_birthError = document.getElementById("date_of_birthError");
+
+        firstNameError.innerHTML = "";
+        lastNameError.innerHTML = "";
+        Address_1Error.innerHTML = "";
+        emailError.innerHTML = "";
+        address_2Error.innerHTML = "";
+        phone_number_error.innerHTML = "";
+        cityError.innerHTML = "";
+        genderError.innerHTML = "";
+        zip_codeError.innerHTML = "";
+        date_of_birthError.innerHTML = "";
+
+
+
+        if (!firstNameRegex.test(firstName)) {
+          firstNameError.innerHTML = "Firstname can only contain letters";
+          isValid = false;
+        }
+        if (!lastNameRegex.test(lastName)) {
+          lastNameError.innerHTML = "Lastname can only contain letters";
+          isValid = false;
+        }
+        if (!emailRegex.test(email)) {
+          emailError.innerHTML = "Write email in correct format";
+          isValid = false;
+        }
+        if (!phone_numberRegex.test(phone_number)) {
+          phone_number_error.innerHTML = "Please write correct phone number";
+          isValid = false;
+        }
+        if (!cityRegex.test(city)) {
+          cityError.innerHTML = "Please write city";
+          isValid = false;
+        }
+
+        if (!date_of_birthRegex.test(date_of_birth)) {
+          date_of_birthError.innerHTML = "Please write correct date of birth";
+          isValid = false;
+        }
+        if (!(document.getElementsByName('gender')[0].checked || document.getElementsByName('gender')[1].checked)) {
+          genderError.innerHTML = "Please select a gender";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      if (currentSection === 1) {
+
+        let isValid = true;
+        //education details
+        var course = document.getElementById('course').value;
+        var passing_yyear = document.getElementById('passing_yyear').value;
+        var persu1 = document.getElementById('persu1').value;
+
+        var courseRegex = /^[a-zA-Z]+$/;
+        var passing_yyearRegex = /^(19|20)\d{2}$/;
+        var persu1Regex = /^[0-9]+$/;
+
+        var passing_yyearError = document.getElementById("passing_yyearError");
+        var persu1Error = document.getElementById("persu1Error");
+
+        passing_yyearError.innerHTML = "";
+        persu1Error.innerHTML = "";
+
+        if (!passing_yyearRegex.test(passing_yyear)) {
+          passing_yyearError.innerHTML = "Please write correct year";
+          isValid = false;
+        }
+
+        if (!persu1Regex.test(persu1)) {
+          persu1Error.innerHTML = "Please write correct percentage";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      //work expierence
+
+      if (currentSection === 2) {
+
+        let isValid = true;
+
+        var companyName1 = document.getElementById('companyName1').value;
+
+        var Designation1 = document.getElementById('Designation1').value;
+
+        var From1 = document.getElementById('From1').value;
+
+        var To1 = document.getElementById('To1').value;
+
+        var companyNameRegex1 = /^[a-zA-Z]+$/;
+
+        var DesignationRegex1 = /^[a-zA-Z]+$/;
+
+        var FromRegex1 = /^(19|20)\d{2}$/;
+
+        var ToRegex1 = /^(19|20)\d{2}$/;
+
+        var companyNameError1 = document.getElementById("companyNameError1");
+
+        var DesignationError1 = document.getElementById("DesignationError1");
+
+        var fromError1 = document.getElementById("fromError1");
+
+        var toError1 = document.getElementById("toError1");
+
+        companyNameError1.innerHTML = "";
+
+        DesignationError1.innerHTML = "";
+
+        fromError1.innerHTML = "";
+
+        toError1.innerHTML = "";
+
+        if (!companyNameRegex1.test(companyName1)) {
+          companyNameError1.innerHTML = "company name can only be in letters !!";
+          isValid = false;
+        }
+
+
+        if (!DesignationRegex1.test(Designation1)) {
+          DesignationError1.innerHTML = " non no Designation can only be in letters !!";
+          isValid = false;
+        }
+
+
+        if (!FromRegex1.test(From1)) {
+          fromError1.innerHTML = "Please write valid year !!";
+          isValid = false;
+        }
+
+
+        if (!ToRegex1.test(To1)) {
+          toError1.innerHTML = "Please write valid year !!";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      if (currentSection === 5) {
+
+        let isValid = true;
+        var Name1 = document.getElementById('Name1').value;
+        var ContactNumber1 = document.getElementById('ContactNumber1').value;
+        var Relation1 = document.getElementById('Relation1').value;
+
+        var Name1Regex = /^[a-zA-Z]+$/;
+        var ContactNumber1Regex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+        var Relation1Regex = /^[a-zA-Z]+$/;
+
+        var NameError1 = document.getElementById("NameError1");
+        var ContactNumberError1 = document.getElementById("ContactNumberError1");
+        var RelationError1 = document.getElementById("RelationError1");
+
+        NameError1.innerHTML = "";
+        ContactNumberError1.innerHTML = "";
+        RelationError1.innerHTML = "";
+
+        if (!Name1Regex.test(Name1)) {
+          NameError1.innerHTML = "Please write valid Name !!";
+          isValid = false;
+        }
+        if (!ContactNumber1Regex.test(ContactNumber1)) {
+          ContactNumberError1.innerHTML = "Please write valid number !!";
+          isValid = false;
+        }
+        if (!Relation1Regex.test(Relation1)) {
+          RelationError1.innerHTML = "Please write valid relation !!";
+          isValid = false;
+        }
+
+        return isValid;
+
+      }
+
+      if (currentSection === 6) {
+        let isValid = true;
+        var Notice_period = document.getElementById('Notice_period').value;
+        var Expacted_CTC = document.getElementById('Expacted_CTC').value;
+        var Current_CTC = document.getElementById('Current_CTC').value;
+
+        var Notice_periodRegex = /^[0-9]+$/;
+        var Expacted_CTCRegex = /^[0-9]+$/;
+        var Current_CTCRegex = /^[0-9]+$/;
+
+        var Notice_periodError = document.getElementById("Notice_periodError");
+        var Expacted_CTCError = document.getElementById("Expacted_CTCError");
+        var Current_CTCError = document.getElementById("Current_CTCError");
+
+        Notice_periodError.innerHTML = "";
+        Expacted_CTCError.innerHTML = "";
+        Current_CTCError.innerHTML = "";
+
+        if (!Notice_periodRegex.test(Notice_period)) {
+          Notice_periodError.innerHTML = "notice period can only be in numbers !!";
+          isValid = false;
+        }
+        if (!Expacted_CTCRegex.test(Expacted_CTC)) {
+          Expacted_CTCError.innerHTML = "Expected CTC can only be in numbers !!";
+          isValid = false;
+        }
+        if (!Current_CTCRegex.test(Current_CTC)) {
+          Current_CTCError.innerHTML = "Current CTC can only be in numbers !!";
+          isValid = false;
+        }
+        return isValid;
+      }
+
+      if (currentSection === 3) {
+        return isValid = true;
+      }
+      if (currentSection === 4) {
+        return isValid = true;
+      }
+    }
+
+    document.getElementById("saveBtn").addEventListener("click", function () {
+
+      var languages = [];
+      var checkboxes1 = document.getElementsByName("language[]");
+      for (var i = 0; i < checkboxes1.length; i++) {
+        if (checkboxes1[i].checked) {
+          var language = checkboxes1[i].value;
+          var proficiency1 = [];
+          var proficiencyCheckboxes = document.getElementsByName(language + "[]");
+
+          for (var j = 0; j < proficiencyCheckboxes.length; j++) {
+            if (proficiencyCheckboxes[j].checked) {
+              proficiency1.push(proficiencyCheckboxes[j].value);
+            }
+          }
+
+          languages.push({ language: language, proficiency1: proficiency1 })
+        }
+      }
+
+
+      var technologies = [];
+      var checkboxes = document.getElementsByName("technology[]");
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          var technology = checkboxes[i].value;
+          var proficiency = document.querySelector('input[name="' + technology + '[]"]:checked').value;
+          technologies.push({ technology: technology, proficiency: proficiency })
+        }
+      }
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/your-details", true);
+
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            console.log("save succesfully!!");
+          } else {
+            console.error("Error occured");
+          }
+        }
+      };
+      var data = {
+
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        Designation: document.getElementById('Designation').value,
+        Address_1: document.getElementById('Address_1').value,
+        email: document.getElementById('email').value,
+        address_2: document.getElementById('address_2').value,
+        phone_number: document.getElementById('phone_number').value,
+        city: document.getElementById('city').value,
+        State: document.getElementById('State').value,
+        zip_code: document.getElementById('zip_code').value,
+        date_of_birth: document.getElementById('date_of_birth').value,
+        gender: document.getElementById('gender').value,
+        relation: document.getElementById('relation').value,
+
+        Notice_period: document.getElementById('Notice_period').value,
+        Expacted_CTC: document.getElementById('Expacted_CTC').value,
+        Current_CTC: document.getElementById('Current_CTC').value,
+        Preferd_location: document.getElementById('Preferd_location').value,
+        Department: document.getElementById('Department').value,
+
+        educationDetails: [],
+
+        workExperienceDetails: [],
+
+        referanceContactDetails: [],
+
+        technologies: technologies,
+
+        languages: languages
+
+      };
+
+      //education rows
+      var educationRows = document.querySelectorAll('#educationTable tr');
+      educationRows.forEach(function (row) {
+        var courseName = row.querySelector('select[name="course[]"]').value;
+        var passingYear = row.querySelector('input[name="passing_yyear[]"]').value;
+        var percentage = row.querySelector('input[name="persu1[]"]').value;
+
+        data.educationDetails.push({
+          courseName: courseName,
+          passingYear: passingYear,
+          percentage: percentage
+        });
+      });
+
+      //work experience rows
+      var workExperienceRows = document.querySelectorAll('#workExperienceTable tr');
+      workExperienceRows.forEach(function (row) {
+        var companyName1 = row.querySelector('input[name="companyName1[]"]').value;
+        var Designation1 = row.querySelector('input[name="Designation1[]"]').value;
+        var From1 = row.querySelector('input[name="From1[]"]').value;
+        var To1 = row.querySelector('input[name="To1[]"]').value;
+
+        data.workExperienceDetails.push({
+          companyName1: companyName1,
+          Designation1: Designation1,
+          From1: From1,
+          To1: To1
+        });
+      });
+
+      var referenceContactRows = document.querySelectorAll('#referenceTable tr');
+      referenceContactRows.forEach(function (row) {
+        var Name1 = row.querySelector('input[name="Name1[]"]').value;
+        var ContactNumber1 = row.querySelector('input[name="ContactNumber1[]"]').value;
+        var Relation1 = row.querySelector('input[name="Relation1[]"]').value;
+
+        data.referanceContactDetails.push({
+          Name1: Name1,
+          ContactNumber1: ContactNumber1,
+          Relation1: Relation1
+        });
+      });
+
+
+      xhr.send(JSON.stringify(data));
+    });
+
+  </script>
+</body>
+
+</html>

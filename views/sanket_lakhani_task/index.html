@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<style>
+  h1{
+    text-align: center;
+  }
+</style>
+<body>
+  <input type="text" id="searchInput" placeholder="search Anything">
+  <input type="button" value="Search" onclick="searchData()">
+  <table border=10 cellpadding="10" style="margin: 0 auto;width : 100%" id="container">
+    <h1 >Tirth Raval 24DEV077</h1>
+    <tr>
+      <th>ID</th>
+      <th>UserID</th>
+      <th>Body</th>
+      <th>Title</th>
+      <th>Report</th>
+    </tr>
+  </table>
+  <div style="margin: 0 auto; width :fit-content;padding-top: 20px;">
+    <input type="button" value="<" id="previous" onclick="previousnextfunc(-1)" />
+    <input type="button" value="1" id="btn1" />
+    <input type="button" value="> " id="next" onclick="previousnextfunc(1)" />
+  </div>
+</body>
+<script>
+  function searchData() {
+    let searchInput = document.getElementById("searchInput").value.toLowerCase();
+    let filteredData = result.filter(item => item.id.toString().toLowerCase().includes(searchInput) || item.userId.toString().toLowerCase().includes(searchInput) || item.body.toLowerCase().includes(searchInput) || item.title.toLowerCase().includes(searchInput));
+    displayData(filteredData);
+  }
+  function displayData(data) {
+    let container = document.getElementById("container"); //structure
+    container.innerHTML = "";
+    data.forEach(val => {
+      let row = document.createElement("tr");
+      let c1 = document.createElement("td");
+      let c2 = document.createElement("td");
+      let c3 = document.createElement("td");
+      let c4 = document.createElement("td");
+      let c5 = document.createElement("td");
+      c1.innerText = val.id;
+      c2.innerText = val.userId;
+      c3.innerText = val.body;
+      c4.innerText = val.title;
+      c5.innerHTML = `<a href = "/details/${val.id}">Click here</a>`;
+      row.appendChild(c1);
+      row.appendChild(c2);
+      row.appendChild(c3);
+      row.appendChild(c4);
+      row.appendChild(c5);
+
+      container.appendChild(row);
+    });
+  }
+  let result;
+  let pr = fetch("https://jsonplaceholder.typicode.com/posts");
+  pr.then((res) => {
+    return res.json();    
+  }).then((data) => {
+    result = data;
+    pagination(1);  
+  });
+  let first = document.getElementById("previous"); 
+  let last = document.getElementById("next");
+  let btn1 = document.getElementById("btn1");
+  let container = document.getElementById("container");
+  let total = 0;
+  let i = 1;
+  if (i == 1) {                
+    first.disabled = true;
+  }
+  function previousnextfunc(increment){
+    let tbl = document.getElementById("container");
+    var rowcount = tbl.rows.length;
+
+    let arrtr = document.getElementsByTagName("tr");
+    for(var j=rowcount-1;j>0;j--){
+      tbl.deleteRow(j);
+    }
+    i=i+increment;
+    first.disabled=(i===1);
+    last.disabled=(i==10);
+    btn1.setAttribute("value",i);
+    pagination(i);
+  }
+
+  function pagination(page) {
+    let skip = (page - 1) * 10;
+    let limit = 10;
+    console.log("page value is " + page);
+    let table = document.createElement("table");
+    result.map((val) => {
+      if (result.indexOf(val) >= skip && result.indexOf(val) < skip + limit) {
+        let row = document.createElement("tr");
+        let c1 = document.createElement("td");
+        let c2 = document.createElement("td");
+        let c3 = document.createElement("td");
+        let c4 = document.createElement("td");
+        let c5 = document.createElement("td");
+        c1.innerText = val.id;
+        c2.innerText = val.userId;
+        c3.innerText = val.body;
+        c4.innerText = val.title;
+        c5.innerHTML = `<a href="/details?id=${val.id}">click here</a>`;
+        row.appendChild(c1);
+        row.appendChild(c2);
+        row.appendChild(c3);
+        row.appendChild(c4);
+        row.appendChild(c5);
+        container.appendChild(row);
+      }
+    });
+  }
+</script>
+</html>
