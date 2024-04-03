@@ -306,36 +306,58 @@
     </legend>
     <table cellspacing="10" id="languageKnown">
       <tr>
-        <td><input type="checkbox" name="language[]" id="Hindi" value="hindi" onclick="validateCheckbox('Hindi')">
+        <td><input type="checkbox" name="language[]" id="Hindi" value="hindi" <%=userData[5]?.some(obj=>
+          obj.language_name == 'hindi') ? 'checked = true' : '' %>
+          onclick="validateCheckbox('Hindi')">
         </td>
         <td><label for="Hindi">Hindi</label></td>
-        <td><input type="checkbox" name="hindi[]" id="read" class="Hindi-checkbox" value="read" disabled></td>
+        <td><input type="checkbox" name="hindi[]" id="read" class="Hindi-checkbox" value="read"
+            <%=userData[5]?.some(obj=>
+          obj.lang_read == 'read') ? 'checked = true' : 'disabled' %>></td>
         <td><label for="read">read</label></td>
-        <td><input type="checkbox" name="hindi[]" id="write" class="Hindi-checkbox" value="write" disabled></td>
+        <td><input type="checkbox" name="hindi[]" id="write" class="Hindi-checkbox" value="write"
+            <%=userData[5]?.some(obj=>
+          obj.lang_write == 'write') ? 'checked = true' : 'disabled' %>></td>
         <td><label for="write">write</label></td>
-        <td><input type="checkbox" name="hindi[]" id="speak" class="Hindi-checkbox" value="speak" disabled></td>
+        <td><input type="checkbox" name="hindi[]" id="speak" class="Hindi-checkbox" value="speak"
+            <%=userData[5]?.some(obj=>
+          obj.lang_speak == 'speak') ? 'checked = true' : 'disabled' %>></td>
         <td><label for="speak">speak</label></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="language[]" id="English" value="english" onclick="validateCheckbox('English')">
+        <td><input type="checkbox" name="language[]" id="English" value="english" <%=userData[5]?.some(obj=>
+          obj.language_name == 'english') ? 'checked = true' : '' %> onclick="validateCheckbox('English')">
         </td>
         <td><label for="English">English</label></td>
-        <td><input type="checkbox" name="english[]" id="read" class="English-checkbox" value="read" disabled></td>
+        <td><input type="checkbox" name="english[]" id="read" class="English-checkbox" value="read"
+            <%=userData[5]?.some(obj=>
+          obj.lang_read == 'read') ? 'checked = true' : 'disabled' %> ></td>
         <td><label for="read">read</label></td>
-        <td><input type="checkbox" name="english[]" id="write" class="English-checkbox" value="write" disabled></td>
+        <td><input type="checkbox" name="english[]" id="write" class="English-checkbox" value="write"
+            <%=userData[5]?.some(obj=>
+          obj.lang_write == 'write') ? 'checked = true' : 'disabled' %> ></td>
         <td><label for="write">write</label></td>
-        <td><input type="checkbox" name="english[]" id="speak" class="English-checkbox" value="speak" disabled></td>
+        <td><input type="checkbox" name="english[]" id="speak" class="English-checkbox" value="speak"
+            <%=userData[5]?.some(obj=>
+          obj.lang_speak == 'speak') ? 'checked = true' : 'disabled' %> ></td>
         <td><label for="speak">speak</label></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="language[]" id="Gujarati" value="gujarati"
-            onclick="validateCheckbox('Gujarati')"></td>
+        <td><input type="checkbox" name="language[]" id="Gujarati" value="gujarati" <%=userData[5]?.some(obj=>
+          obj.language_name == 'gujarati') ? 'checked = true' : '' %>
+          onclick="validateCheckbox('Gujarati')"></td>
         <td><label for="Gujarati">Gujarati</label></td>
-        <td><input type="checkbox" name="gujarati[]" id="read" class="Gujarati-checkbox" value="read" disabled></td>
+        <td><input type="checkbox" name="gujarati[]" id="read" class="Gujarati-checkbox" value="read"
+            <%=userData[5]?.some(obj=>
+          obj.lang_read == 'read') ? 'checked = true' : 'disabled' %>></td>
         <td><label for="read">read</label></td>
-        <td><input type="checkbox" name="gujarati[]" id="write" class="Gujarati-checkbox" value="write" disabled></td>
+        <td><input type="checkbox" name="gujarati[]" id="write" class="Gujarati-checkbox" value="write"
+            <%=userData[5]?.some(obj=>
+          obj.lang_write == 'write') ? 'checked = true' : 'disabled' %>></td>
         <td><label for="write">write</label></td>
-        <td><input type="checkbox" name="gujarati[]" id="speak" class="Gujarati-checkbox" value="speak" disabled></td>
+        <td><input type="checkbox" name="gujarati[]" id="speak" class="Gujarati-checkbox" value="speak"
+            <%=userData[5]?.some(obj=>
+          obj.lang_speak == 'speak') ? 'checked = true' : 'disabled' %>></td>
         <td><label for="speak">speak</label></td>
       </tr>
     </table>

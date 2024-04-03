@@ -184,11 +184,13 @@ app.get('/form/:id', authentication, (req, res) => {
     const wql = `select * from work_experience where bid=${userId};`;
     const rql = `select * from referance_contact where bid=${userId};`;
     const yql = `select * from referance_details where bid=${userId};`;
+    const uql = `select * from language_known where bid=${userId};`;
+    const lql = `select * from technology_known where bid=${userId};`;
     // const opl = `select * from language_known where bid=${userId};`;
     // const htl = `select * from technology_known where bid=${userId};`;
 
     //basic details
-    connection.query(sql + eql + wql + rql + yql, (error, results) => {
+    connection.query(sql + eql + wql + rql + yql + uql + lql, (error, results) => {
         if (error) {
             console.error(error);
             res.render('error', { errorMessage: 'error occured while fetching user data.' })
@@ -572,7 +574,8 @@ app.post('/your-details', authentication, (req, res) => {
     var technologies = req.body.technologies;
     var languages = req.body.languages;
 
-    let lang12 = req.body.languages.length;
+    const lang12 = languages.length;
+    console.log(lang12);
 
     let last_id;
 
@@ -684,12 +687,12 @@ app.post('/your-details', authentication, (req, res) => {
             })
         })
 
-        for (let i = 0; i < lang12.length; i++) {
-            console.log(req.body[languages[i]][0]);
-            connection.query(`INSERT INTO language_known (bid,language_name,lang_read,lang_write,lang_speak) VALUES ("${c_id}","${languages[i]}","${req.body[languages[i]][0] || ""}","${req.body[languages[i]][1] || ""}","${req.body[languages[i]][2] || ""}")`, (error, results) => {
+        for (let i = 0; i < lang12; i++) {
+            console.log('hello');
+            connection.query(`INSERT INTO language_known (bid,language_name,lang_read,lang_write,lang_speak) VALUES ("${c_id}","${languages[i].language}","${languages[i].proficiency1[0] || ""}","${languages[i].proficiency1[1] || ""}","${languages[i].proficiency1[2] || ""}")`, (error, results) => {
                 if (error) {
                     console.error(error);
-                    res.render('jobForm1', { errorMessage: 'Error occurred while submitting the form.' });
+                    res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { errorMessage: 'Error occurred while submitting the form.' });
                 } else {
 
                     console.log('languages data inserted successfully');
