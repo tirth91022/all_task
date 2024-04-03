@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
-const authentication = async(req,res,next) =>{
+const authentication = async (req, res, next) => {
     console.log("hello vijay");
-    if(req.cookies.token){
+    if (req.cookies.token) {
         next();
-        
+
     }
-    else{
+    else {
         res.redirect("/sign_in");
     }
 }
