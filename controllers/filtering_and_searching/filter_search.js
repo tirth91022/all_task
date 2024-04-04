@@ -68,13 +68,14 @@ app.post('/filtering_and', authentication, (req, res) => {
         exam_master ON result.exam_id = exam_master.id
     GROUP BY student.student_id order by student.student_id) as tt1 WHERE
         first_name LIKE '%${fname}%'
-            ${req.body.and_or} (total_prelim_practical_marks + total_prelim_theory_marks) > ${prilim}
-            ${req.body.and_or} (total_terminal_practical_marks + total_terminal_theory_marks) > ${terminal}
-            ${req.body.and_or} (total_final_practical_marks + total_final_theory_marks) > ${final}
-            ${req.body.and_or} total >${total}
-            ${req.body.and_or} ((total) / 1200) * 100 > ${percentage};`, (err, rows) => {
+            ${req.body.radio} (total_prelim_practical_marks + total_prelim_theory_marks) > ${prilim}
+            ${req.body.radio} (total_terminal_practical_marks + total_terminal_theory_marks) > ${terminal}
+            ${req.body.radio} (total_final_practical_marks + total_final_theory_marks) > ${final}
+            ${req.body.radio} total >${total}
+            ${req.body.radio} ((total) / 1200) * 100 > ${percentage};`, (err, rows) => {
         if (err) throw err;
-        res.render('/home/tirth-raval/Documents/one_union_form/views/seach_by_query_report_card/index.ejs', { result: rows });
+        const nextPage = rows.length === perPage;
+        res.render('/home/tirth-raval/Documents/one_union_form/views/seach_by_query_report_card/index.ejs', { result: rows, currentPage: parseInt(page), nextPage });
     });
 });
 app.get('/search_by_query', authentication, (req, res) => {

@@ -8,9 +8,6 @@ require("dotenv").config();
 const cookieparser = require("cookie-parser");
 app.use(cookieparser());
 app.use(express.json());
-const alert = require("alert-node");
-const mysql = require("mysql2");
-const port = 8000;
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
@@ -134,19 +131,6 @@ app.post('/your-details', authentication, (req, res) => {
             })
         })
 
-        // for (let i = 0; i < language.length; i++) {
-        //     console.log(req.body[language[i]][0]);
-        //     connection.query(`INSERT INTO language_known (bid,language_name,lang_read,lang_write,lang_speak) VALUES ("${c_id}","${language[i]}","${req.body[language[i]][0] || ""}","${req.body[language[i]][1] || ""}","${req.body[language[i]][2] || ""}")`, (error, results) => {
-        //         if (error) {
-        //             console.error(error);
-        //             res.render('jobForm1', { errorMessage: 'Error occurred while submitting the form.' });
-        //         } else {
-
-        //             console.log('languages data inserted successfully');
-        //         }
-        //     });
-        // }
-
         technologies.forEach((education) => {
             const insertQuery4 = `INSERT INTO technology_known (bid, technology_name, tech_level) VALUES ("${c_id}", "${education.technology}","${education.proficiency}");`;
             connection.query(insertQuery4, (error, results) => {
@@ -188,7 +172,6 @@ app.get("/data", authentication, (req, res) => {
 })
 
 app.get('/form/:id', authentication, (req, res) => {
-    console.log("hello");
     const userId = req.params.id;
     const sql = `select * from basic_details where bid = ${userId};`;
     const eql = `select * from education_details where bid=${userId};`;
@@ -197,8 +180,6 @@ app.get('/form/:id', authentication, (req, res) => {
     const yql = `select * from referance_details where bid=${userId};`;
     const uql = `select * from language_known where bid=${userId};`;
     const lql = `select * from technology_known where bid=${userId};`;
-    // const opl = `select * from language_known where bid=${userId};`;
-    // const htl = `select * from technology_known where bid=${userId};`;
 
     //basic details
     connection.query(sql + eql + wql + rql + yql + uql + lql, (error, results) => {
@@ -208,13 +189,9 @@ app.get('/form/:id', authentication, (req, res) => {
         } else {
 
             const userData = results;
-
-            console.log(results);
             res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { userData: userData });
         }
     });
-
-    //education details
 
 });
 
