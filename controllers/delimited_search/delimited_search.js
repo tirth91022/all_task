@@ -19,6 +19,7 @@ app.get('/delimited_search', authentication, (req, res) => {
     let query = '', expression = '';
 
     const queryObj = new URLSearchParams(req.query);
+    console.log('here', queryObj);
 
     function getString(s, flag = true) {
         let o = '';
@@ -40,6 +41,7 @@ app.get('/delimited_search', authentication, (req, res) => {
         let expression1 = '', expression2 = '', expression3 = '', expression4 = '', expression5 = '', expression6 = '';
 
         let id = q.split('_')?.filter(l => l.length);
+        console.log('id ', id.map(e => getString(e)).filter(l => l.length).map(e => `id LIKE '%${e}%'`).join(' OR '));
         if (id.length) {
             expression1 = id.map(e => getString(e)).filter(l => l.length).map(e => `id LIKE '%${e}%'`).join(' OR ');
         }
@@ -70,6 +72,7 @@ app.get('/delimited_search', authentication, (req, res) => {
         }
 
         expression = [expression1, expression2, expression3, expression4, expression5, expression6].filter(l => l.length).map(a => '( ' + a + ' )').join(' AND ');
+        console.log('exp', expression);
     }
 
     new Promise((resolve, reject) => {

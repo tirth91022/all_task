@@ -45,9 +45,11 @@ app.post('/your-details', authentication, (req, res) => {
     var languages = req.body.languages;
 
     const lang12 = languages.length;
-    console.log(lang12);
 
-    let last_id;
+
+
+    let last_id1;
+    let last_id2;
 
     var Preferd_location = req.body.Preferd_location;
     var Notice_period = req.body.Notice_period;
@@ -55,107 +57,248 @@ app.post('/your-details', authentication, (req, res) => {
     var Expacted_CTC = req.body.Expacted_CTC;
     var Current_CTC = req.body.Current_CTC;
 
-    // var language = req.body.language;
-    // var hindi = req.body.hindi;
-    // var english = req.body.english;
-    // var gujarati = req.body.gujarati;
 
-    // var technology = req.body.technology;
-    // var mysql = req.body.mysql;
-    // var oracle = req.body.oracle;
-    // var laravel = req.body.laravel;
-    // var php = req.body.php;
-    console.log(technologies);
-    console.log(educationDetails);
-    console.log(languages);
-
-    connection.query(`INSERT INTO basic_details (first_name,last_name,designation,address_1,address_2,phone_number,city,state,gender,zip_code,relationalshipStatus,DOB,email) VALUES ("${first_name}","${last_name}","${designation}","${address_1}","${address_2}","${phone_number}","${city}","${state}","${gender}","${zip_code}","${relationalshipStatus}","${DOB}","${email}");`, (error, results) => {
-        if (error) {
-            console.error(error);
-            res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { errorMessage: 'Error occurred while submitting the form.' });
+    connection.query(`SELECT * FROM basic_details WHERE email = "${email}"`, (selectError, selectResults) => {
+        if (selectError) {
+            console.error(selectError);
+            res.status(500).send('Error occurred while checking user data existence.');
         } else {
-            console.log('basic details Data inserted successfully');
-            last_id = results.insertId;
+            if (selectResults.length > 0) {
+                const userId = selectResults[0].bid;
 
-            call(results.insertId)
-            // Redirect to the form page after successful submission
+                connection.query(`UPDATE basic_details SET first_name="${first_name}", last_name="${last_name}", designation="${designation}", address_1="${address_1}", address_2="${address_2}", phone_number="${phone_number}", city="${city}", state="${state}", gender="${gender}", zip_code="${zip_code}", relationalshipStatus="${relationalshipStatus}", DOB="${DOB}" WHERE email = "${email}"`, (updateError, updateResults) => {
+                    if (updateError) {
+                        console.error(updateError);
+                        res.status(500).send('Error occurred while updating user data.');
+                    } else {
+
+                        console.log(userId);
+                        call(userId)
+
+                        console.log('User data updated successfully');
+                        res.status(200).send('User data updated successfully');
+                    }
+                });
+            } else {
+
+                connection.query(`INSERT INTO basic_details (first_name,last_name,designation,address_1,address_2,phone_number,city,state,gender,zip_code,relationalshipStatus,DOB,email) VALUES ("${first_name}","${last_name}","${designation}","${address_1}","${address_2}","${phone_number}","${city}","${state}","${gender}","${zip_code}","${relationalshipStatus}","${DOB}","${email}")`, (insertError, insertResults) => {
+                    if (insertError) {
+                        console.error(insertError);
+                        res.status(500).send('Error occurred while inserting user data.');
+                    } else {
+
+                        last_id2 = insertResults.insertId;
+                        call(last_id2)
+
+                        console.log('User data inserted successfully');
+                        res.status(200).send('User data inserted successfully');
+                    }
+                });
+            }
         }
     });
 
     function call(c_id) {
 
-        connection.query(`INSERT INTO referance_details (bid,prefered_location,notice_period,current_ctc,expected_ctc,department) VALUES ("${c_id}","${Preferd_location}","${Notice_period}","${Current_CTC}","${Expacted_CTC}","${Department}")`, (error, results) => {
-            if (error) {
-                console.error(error);
-                res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { errorMessage: 'Error occurred while submitting the form.' });
+        connection.query(`SELECT * FROM referance_details WHERE bid = ${c_id}`, (selectError, selectResults) => {
+            if (selectError) {
+                console.error(selectError);
+                res.status(500).send('Error occurred while checking referance details existence.');
             } else {
-                console.log('preferance_details Data inserted successfully');
+                if (selectResults.length > 0) {
+
+                    connection.query(`UPDATE referance_details SET prefered_location="${Preferd_location}", notice_period="${Notice_period}", current_ctc="${Current_CTC}", expected_ctc="${Expacted_CTC}", department="${Department}" WHERE bid = ${c_id}`, (updateError, updateResults) => {
+                        if (updateError) {
+                            console.error(updateError);
+                            res.status(500).send('Error occurred while updating referance details.');
+                        } else {
+                            console.log('Referance details updated successfully');
+
+                        }
+                    });
+                } else {
+
+                    connection.query(`INSERT INTO referance_details (bid, prefered_location, notice_period, current_ctc, expected_ctc, department) VALUES (${c_id}, "${Preferd_location}", "${Notice_period}", "${Current_CTC}", "${Expacted_CTC}", "${Department}")`, (insertError, insertResults) => {
+                        if (insertError) {
+                            console.error(insertError);
+                            res.status(500).send('Error occurred while inserting referance details.');
+                        } else {
+                            console.log('Referance details inserted successfully');
+
+                        }
+                    });
+                }
             }
         });
+
         educationDetails.forEach((education) => {
-            const insertQuery1 = `INSERT INTO education_details (course_name, passing_year, percentage,bid) VALUES ('${education.courseName}', '${education.passingYear}', '${education.percentage}',"${c_id}");`;
-            connection.query(insertQuery1, (error, results) => {
-                if (error) {
-                    console.error(error);
-                    res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { errorMessage: 'Error occurred while submitting the form.' });
+
+            connection.query(`SELECT * FROM education_details WHERE bid = ${c_id} AND course_name = '${education.courseName}'`, (selectError, selectResults) => {
+                if (selectError) {
+                    console.error(selectError);
+                    res.status(500).send('Error occurred while checking education details existence.');
                 } else {
+                    if (selectResults.length > 0) {
 
-                    console.log('education_details Data inserted successfully');
-                }
-            })
-        })
-        // console.log(workExperienceDetails);
-        workExperienceDetails.forEach((workExperience) => {
-            const insertQuery2 = `INSERT INTO work_experience (companyName1, designation1, from1,to1,bid) VALUES ('${workExperience.companyName1}', '${workExperience.Designation1}', '${workExperience.From1}','${workExperience.To1}',"${c_id}");`;
-            connection.query(insertQuery2, (error, results) => {
-                if (error) {
-                    console.error(error);
-                    res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { errorMessage: 'Error occurred while submitting the form.' });
-                } else {
+                        connection.query(`UPDATE education_details SET passing_year = '${education.passingYear}', percentage = '${education.percentage}' WHERE bid = ${c_id} AND course_name = '${education.courseName}'`, (updateError, updateResults) => {
+                            if (updateError) {
+                                console.error(updateError);
+                                res.status(500).send('Error occurred while updating education details.');
+                            } else {
+                                console.log('Education detail updated successfully');
+                            }
+                        });
+                    } else {
 
-                    console.log('work experience Data inserted successfully');
-                }
-            })
-        })
-
-        referanceContactDetails.forEach((refer) => {
-            const insertQuery3 = `INSERT INTO referance_contact (name1, contactNo1, relation1,bid) VALUES ('${refer.Name1}', '${refer.ContactNumber1}', '${refer.Relation1}',"${c_id}");`;
-            connection.query(insertQuery3, (error, results) => {
-                if (error) {
-                    console.error(error);
-                    res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { errorMessage: 'Error occurred while submitting the form.' });
-                } else {
-
-                    console.log('refer contacts Data inserted successfully');
-                }
-            })
-        })
-
-        technologies.forEach((education) => {
-            const insertQuery4 = `INSERT INTO technology_known (bid, technology_name, tech_level) VALUES ("${c_id}", "${education.technology}","${education.proficiency}");`;
-            connection.query(insertQuery4, (error, results) => {
-                if (error) {
-                    console.error(error);
-                    res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { errorMessage: 'Error occurred while submitting the form.' });
-                } else {
-
-                    console.log('technology data inserted successfully');
-                }
-            })
-        })
-
-        for (let i = 0; i < lang12; i++) {
-            console.log('hello');
-            connection.query(`INSERT INTO language_known (bid,language_name,lang_read,lang_write,lang_speak) VALUES ("${c_id}","${languages[i].language}","${languages[i].proficiency1[0] || ""}","${languages[i].proficiency1[1] || ""}","${languages[i].proficiency1[2] || ""}")`, (error, results) => {
-                if (error) {
-                    console.error(error);
-                    res.render('/home/tirth-raval/Documents/one_union_form/views/ajax_form/form2.ejs', { errorMessage: 'Error occurred while submitting the form.' });
-                } else {
-
-                    console.log('languages data inserted successfully');
+                        connection.query(`INSERT INTO education_details (course_name, passing_year, percentage, bid) VALUES ('${education.courseName}', '${education.passingYear}', '${education.percentage}', ${c_id})`, (insertError, insertResults) => {
+                            if (insertError) {
+                                console.error(insertError);
+                                res.status(500).send('Error occurred while inserting education details.');
+                            } else {
+                                console.log('Education detail inserted successfully');
+                            }
+                        });
+                    }
                 }
             });
-        }
+        });
+
+        workExperienceDetails.forEach((workExperience) => {
+
+            connection.query(`SELECT * FROM work_experience WHERE bid = ${c_id} AND companyName1 = '${workExperience.companyName1}'`, (selectError, selectResults) => {
+                if (selectError) {
+                    console.error(selectError);
+                    res.status(500).send('Error occurred while checking work experience details existence.');
+                } else {
+                    if (selectResults.length > 0) {
+
+                        connection.query(`UPDATE work_experience SET designation1 = '${workExperience.Designation1}', from1 = '${workExperience.From1}', to1 = '${workExperience.To1}' WHERE bid = ${c_id} AND companyName1 = '${workExperience.companyName1}'`, (updateError, updateResults) => {
+                            if (updateError) {
+                                console.error(updateError);
+                                res.status(500).send('Error occurred while updating work experience details.');
+                            } else {
+                                console.log('Work experience detail updated successfully');
+                            }
+                        });
+                    } else {
+
+                        connection.query(`INSERT INTO work_experience (companyName1, designation1, from1, to1, bid) VALUES ('${workExperience.companyName1}', '${workExperience.Designation1}', '${workExperience.From1}', '${workExperience.To1}', ${c_id})`, (insertError, insertResults) => {
+                            if (insertError) {
+                                console.error(insertError);
+                                res.status(500).send('Error occurred while inserting work experience details.');
+                            } else {
+                                console.log('Work experience detail inserted successfully');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        referanceContactDetails.forEach((refer) => {
+
+            connection.query(`SELECT * FROM referance_contact WHERE bid = ${c_id} AND name1 = '${refer.Name1}'`, (selectError, selectResults) => {
+                if (selectError) {
+                    console.error(selectError);
+                    res.status(500).send('Error occurred while checking reference contact details existence.');
+                } else {
+                    if (selectResults.length > 0) {
+
+                        connection.query(`UPDATE referance_contact SET contactNo1 = '${refer.ContactNumber1}', relation1 = '${refer.Relation1}' WHERE bid = ${c_id} AND name1 = '${refer.Name1}'`, (updateError, updateResults) => {
+                            if (updateError) {
+                                console.error(updateError);
+                                res.status(500).send('Error occurred while updating reference contact details.');
+                            } else {
+                                console.log('Reference contact detail updated successfully');
+                            }
+                        });
+                    } else {
+
+                        connection.query(`INSERT INTO referance_contact (name1, contactNo1, relation1, bid) VALUES ('${refer.Name1}', '${refer.ContactNumber1}', '${refer.Relation1}', ${c_id})`, (insertError, insertResults) => {
+                            if (insertError) {
+                                console.error(insertError);
+                                res.status(500).send('Error occurred while inserting reference contact details.');
+                            } else {
+                                console.log('Reference contact detail inserted successfully');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+
+        technologies.forEach((technology) => {
+
+            connection.query(`SELECT * FROM technology_known WHERE bid = ${c_id} AND technology_name = '${technology.technology}'`, (selectError, selectResults) => {
+                if (selectError) {
+                    console.error(selectError);
+                    res.status(500).send('Error occurred while checking technology details existence.');
+                } else {
+                    if (selectResults.length > 0) {
+
+                        connection.query(`UPDATE technology_known SET tech_level = '${technology.proficiency}' WHERE bid = ${c_id} AND technology_name = '${technology.technology}'`, (updateError, updateResults) => {
+                            if (updateError) {
+                                console.error(updateError);
+                                res.status(500).send('Error occurred while updating technology details.');
+                            } else {
+                                console.log('Technology detail updated successfully');
+                            }
+                        });
+                    } else {
+
+                        connection.query(`INSERT INTO technology_known (bid, technology_name, tech_level) VALUES (${c_id}, '${technology.technology}', '${technology.proficiency}')`, (insertError, insertResults) => {
+                            if (insertError) {
+                                console.error(insertError);
+                                res.status(500).send('Error occurred while inserting technology details.');
+                            } else {
+                                console.log('Technology detail inserted successfully');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+
+
+        languages.forEach((language) => {
+
+            let langRead = language.proficiency1.includes('read') ? 'read' : '';
+            let langWrite = language.proficiency1.includes('write') ? 'write' : '';
+            let langSpeak = language.proficiency1.includes('speak') ? 'speak' : '';
+
+
+            connection.query(`SELECT * FROM language_known WHERE bid = ${c_id} AND language_name = '${language.language}'`, (selectError, selectResults) => {
+                if (selectError) {
+                    console.error(selectError);
+                    res.status(500).send('Error occurred while checking language details existence.');
+                } else {
+                    if (selectResults.length > 0) {
+
+                        connection.query(`UPDATE language_known SET lang_read = '${langRead}', lang_write = '${langWrite}', lang_speak = '${langSpeak}' WHERE bid = ${c_id} AND language_name = '${language.language}'`, (updateError, updateResults) => {
+                            if (updateError) {
+                                console.error(updateError);
+                                res.status(500).send('Error occurred while updating language details.');
+                            } else {
+                                console.log('Language detail updated successfully');
+                            }
+                        });
+                    } else {
+
+                        connection.query(`INSERT INTO language_known (bid, language_name, lang_read, lang_write, lang_speak) VALUES (${c_id}, '${language.language}', '${langRead}', '${langWrite}', '${langSpeak}')`, (insertError, insertResults) => {
+                            if (insertError) {
+                                console.error(insertError);
+                                res.status(500).send('Error occurred while inserting language details.');
+                            } else {
+                                console.log('Language detail inserted successfully');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
 
     }
 });

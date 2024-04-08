@@ -2,7 +2,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 
-
 require("dotenv").config();
 
 const md5 = require("md5");
@@ -10,7 +9,6 @@ const jwt = require("jsonwebtoken");
 const cookieparser = require("cookie-parser");
 app.use(cookieparser());
 app.use(express.json());
-
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
@@ -46,8 +44,8 @@ app.post("/sign_up", async (req, res) => {
         const characters = 'ABCDEFGHIJKLM1800067890NOPQRSTUVWXYZ';
         const charactersLength = characters.length;
         let counter = 0;
-        let salt = ""
-        let access_key = ""
+        let salt = "";
+        let access_key = "";
         while (counter <= 12) {
             salt += characters.charAt(Math.floor(Math.random() * charactersLength))
             access_key += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -142,14 +140,14 @@ app.get("/home", async (req, res) => {
             const decoded = jwt.verify(token, "sdjhksd");
             const userId = decoded.id;
             let userData = await connection.promise().query(`select * from users where id='${userId}'`);
-            const userName = userData[0][0].first_name; // Assuming first_name contains the user's name
-            res.render("/home/tirth-raval/Documents/one_union_form/views/login_logout/home.ejs", { userName }); // Pass the userName to the EJS template
+            const userName = userData[0][0].first_name;
+            res.render("/home/tirth-raval/Documents/one_union_form/views/login_logout/home.ejs", { userName });
         } else {
-            res.redirect("/sign_in"); // Redirect to sign-in page if no token found
+            res.redirect("/sign_in");
         }
     } catch (error) {
         console.log(error);
-        res.redirect("/sign_in"); // Redirect to sign-in page in case of error
+        res.redirect("/sign_in");
     }
 });
 
